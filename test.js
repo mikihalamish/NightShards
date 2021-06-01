@@ -6,18 +6,18 @@ app.get('/', (req, res) => {
     res.send("Empty (But working) Web Page")
 });
 
+const client = new Client({
+    user: 'ron',
+    host: '172.30.247.63',
+    database: 'demodb',
+    password: 'Devops@500K!',
+    port: 5432,
+});
+
 app.get('/connect', (req, res) => {
 
     let result = true
 
-    const client = new Client({
-        user: 'ron',
-        host: '172.30.247.63',
-        database: 'demodb',
-        password: 'Devops@500K!',
-        port: 5432,
-    });
-    const client = new Client();
     client.connect((err) => {
         result = err
         console.log("Connection Error -> " + err)

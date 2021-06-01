@@ -1,15 +1,4 @@
 const { Client } = require('pg');
-
-console.log()
-
-const client = new Client({
-    user: 'ron',
-    host: 'postgressql',
-    database: 'demodb',
-    password: 'Devops@500K!',
-    port: 5432,
-});
-
 const express = require('express');
 const app = express();
 
@@ -19,33 +8,40 @@ app.get('/', (req, res) => {
 
 app.get('/connect', (req, res) => {
 
-    let result = ""
+    let result = true
 
-    client.connect().catch((err) => {
-        result = false
+    const client = new Client({
+        user: 'ron',
+        host: '172.30.247.63',
+        database: 'demodb',
+        password: 'Devops@500K!',
+        port: 5432,
+    });
+    const client = new Client();
+    client.connect((err) => {
+        result = err
+        console.log("Connection Error -> " + err)
     })
 
-    if (result) {
-        const query = `
-        CREATE TABLE users (
-            firstName varchar,
-            lastName varchar,
-            age int
-            );
-            `;
-
-        client.query(query, (err, res) => {
-            if (err) {
-                console.error("DB Error -> " + err);
-                result = "ERROR: " + err
-            } else {
-                result = "Table Created Successfully"
-                client.end();
-            }
-        });
-    } else {
-        result = "Error Connecting DB"
-    }
+    /*  if (result == true) {
+         const query = `
+         CREATE TABLE users (
+             firstName varchar,
+             lastName varchar,
+             age int
+             );
+             `;
+ 
+         client.query(query, (err, res) => {
+             if (err) {
+                 console.error("Creating DB Table Error -> " + err);
+                 result = "ERROR: " + err
+             } else {
+                 result = "Table Created Successfully"
+                 client.end();
+             }
+         });
+     } */
 
     res.send(result)
 })

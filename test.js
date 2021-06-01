@@ -16,34 +16,35 @@ const client = new Client({
 
 app.get('/connect', (req, res) => {
 
-    let result = true
-
     client.connect((err) => {
-        result = err
-        console.log("Connection Error -> " + err)
+        if (err)
+            console.log("Connection Error -> " + err)
+        else
+            console.log("DB Connected Successfully")
     })
 
-    /*  if (result == true) {
-         const query = `
-         CREATE TABLE users (
-             firstName varchar,
-             lastName varchar,
-             age int
-             );
-             `;
- 
-         client.query(query, (err, res) => {
-             if (err) {
-                 console.error("Creating DB Table Error -> " + err);
-                 result = "ERROR: " + err
-             } else {
-                 result = "Table Created Successfully"
-                 client.end();
-             }
-         });
-     } */
 
-    res.send(result)
+    res.send("Check Console")
+})
+
+app.get('/create', (req, res) => {
+    const query = `
+        CREATE TABLE users (
+            firstName varchar,
+            lastName varchar,
+            age int
+            );
+            `;
+
+    client.query(query, (err, res) => {
+        if (err) {
+            console.error("Creating DB Table Error -> " + err);
+        } else {
+            console.error("Table Created Successfully")
+            client.end();
+        }
+    });
+    res.send("Check Console")
 })
 
 const server = app.listen(8080, () => {

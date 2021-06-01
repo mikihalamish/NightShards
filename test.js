@@ -10,7 +10,7 @@ const client = new Client({
     user: 'ron',
     host: '172.30.247.63',
     database: 'demodb',
-    password: 'Devops@500K!',
+    password: 'Bsmch@500K!',
     port: 5432,
 });
 

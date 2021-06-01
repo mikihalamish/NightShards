@@ -10,9 +10,18 @@ const client = new Client({
     port: 5432,
 });
 
-client.connect()
+const express = require('express');
+const app = express();
 
-const query = `
+app.get('/', (req, res) => {
+    res.send("MIKI !!!")
+});
+
+app.get('/connect', (req, res) => {
+
+    client.connect()
+
+    const query = `
 CREATE TABLE users (
     firstName varchar,
     lastName varchar,
@@ -20,11 +29,17 @@ CREATE TABLE users (
 );
 `;
 
-client.query(query, (err, res) => {
-    if (err) {
-        console.error("DB Error -> " + err);
-        return;
-    }
-    console.log('Table is successfully created');
-    client.end();
+    client.query(query, (err, res) => {
+        if (err) {
+            console.error("DB Error -> " + err);
+            return;
+        }
+        console.log('Table is successfully created');
+        client.end();
+    });
+
+})
+
+const server = app.listen(3000, () => {
+    console.log(`Express running → PORT ${server.address().port}`);
 });

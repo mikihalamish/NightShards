@@ -4,7 +4,7 @@ console.log()
 
 const client = new Client({
     user: 'ron',
-    host: 'postgressql',
+    host: 'postgressql-demo',
     database: 'demodb',
     password: 'Devops@500K!',
     port: 5432,
